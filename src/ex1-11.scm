@@ -8,8 +8,7 @@
 ; 使用迭代计算过程
 (define (f2 n)
   (define (f2-iter x y z count)
-    (cond ((= count 2) x)
-          ((= count 1) y)
-          ((= count 0) z)
+    (cond ((< count 2) count)
+          ((= count 2) x)
           (else (f2-iter (+ x (* 2 y) (* 3 z)) x y (- count 1)))))
   (f2-iter 2 1 0 n))
