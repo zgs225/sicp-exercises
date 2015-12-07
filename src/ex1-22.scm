@@ -1,19 +1,24 @@
-(define (timed-prime-test n)
+(define (search-for-primes start count)
+  (define (next-odd n)
+    (if (odd? n) (+ n 2)
+        (+ n 1)))
+
+  (define (search-for-primes-iter current count)
+    (cond ((= count 0) (display "are primes"))
+          ((prime? current)
+           (display current)
+           (newline)
+           (search-for-primes-iter (next-odd current) (- count 1)))
+          (else (search-for-primes-iter (next-odd current) count))))
+
+  (search-for-primes-iter start count))
+
+(define (timed-search-for-primes start-number count)
+  (define start-time (real-time-clock))
+
+  (search-for-primes start-number count)
   (newline)
-  (display n)
-  (start-prime-test n (real-time-clock)))
-
-(define (start-prime-test n start-time)
-  (if (prime? n)
-      (report-prime (- (real-time-clock) start-time))))
-
-(define (report-prime elapsed-time)
   (display " *** ")
-  (display elapsed-time))
-
-(define (search-for-primes start end)
-  (define (search-for-primes-iter current)
-    (if (odd? current) (timed-prime-test current))
-    (if (< current end) (search-for-primes-iter (+ current 1))))
-
-  (search-for-primes-iter start))
+  (newline)
+  (display "Time costed: ")
+  (display (- (real-time-clock) start-time)))
